@@ -494,7 +494,7 @@ header #close .hamb2 {
 }
 
 .wrapper .pomodoro .pomo-info .btns {
-  width: 350px;
+  width: 60%;
   padding: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -507,14 +507,14 @@ header #close .hamb2 {
           align-items: center;
 }
 
-@media only screen and (max-width: 350px) {
+@media only screen and (max-width: 450px) {
   .wrapper .pomodoro .pomo-info .btns {
-    width: 300px;
+    width: 100%;
   }
 }
 
 .wrapper .pomodoro .pomo-info .btns button {
-  width: 150px;
+  width: 48%;
   margin-left: 10px;
   margin-right: 10px;
   padding: 10px;
@@ -528,12 +528,6 @@ header #close .hamb2 {
   font-size: 1em;
   -webkit-transition: background 0.3s ease-in-out;
   transition: background 0.3s ease-in-out;
-}
-
-@media only screen and (max-width: 350px) {
-  .wrapper .pomodoro .pomo-info .btns button {
-    width: 120px;
-  }
 }
 
 .wrapper .pomodoro .pomo-info .btns button:hover {

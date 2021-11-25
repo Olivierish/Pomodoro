@@ -37,50 +37,61 @@ const pomoContainerElt = document.querySelector(".pomo-info");
 const roundsElt = document.querySelector(".rounds");
 const timeElt = document.querySelector(".time");
 const breakElt = document.querySelector(".break");
+const btnsElt = document.querySelector(".btns");
 const btnStartElt = document.querySelector(".start");
-const btnPauseElt = document.createElement("button");
-btnPauseElt.setAttribute("class", "pause");
-btnPauseElt.textContent = "Pause";
+const btnPauseElt = document.querySelector(".pause");
 const btnResetElt = document.querySelector(".reset");
 
-let startTime = 3; //30min
-let breakTime = 302; //5min
-let isBreak = false;
-let roundsNbr = 0;
-roundsElt.textContent = `Pomodoro ${roundsNbr}`;
-/*
-timeElt.textContent = `${Math.trunc(startTime / 60)}:${
-  startTime % 60 < 10 ? `0${startTime % 60}` : startTime % 60
-}`;*/
+let checkInterval = false; // To avoid the click spams
+const initTime = 10,
+  initBreak = 9; //30min //5min
+let startTime = initTime;
+let breakTime = initBreak;
+let pause = false;
+let roundsNbr = 2;
+
+let timer; //setInterval content
+
+roundsElt.textContent = `Pomodoro ${"🍅".repeat(roundsNbr)}`;
+
 displayTime(timeElt, startTime);
-/*
-breakElt.textContent = `${Math.trunc(breakTime / 60)}:${
-  breakTime % 60 < 10 ? `0${breakTime % 60}` : breakTime % 60
-}`;*/
 displayTime(breakElt, breakTime);
+
 btnStartElt.addEventListener("click", () => {
-  //I added this instruction here to avoid the dela of 1sec. after the click
+  if (checkInterval === false) {
+    checkInterval = true;
+    pause = false;
 
-  startTime--;
-  timeElt.textContent = `${Math.trunc(startTime / 60)}:${
-    startTime % 60 < 10 ? `0${startTime % 60}` : startTime % 60
-  }`;
+    //I added this next 2 instructions here to avoid the delay of 1sec. after the click
+    startTime--;
+    displayTime(timeElt, startTime);
 
-  let timer = setInterval(() => {
-    if (startTime > 0) {
-      startTime--;
-      timeElt.textContent = `${Math.trunc(startTime / 60)}:${
-        startTime % 60 < 10 ? `0${startTime % 60}` : startTime % 60
-      }`;
-    } else if (startTime === 0) {
-      timeElt.classList.remove("active");
-      breakElt.classList.add("active");
-      breakTime--;
-      breakElt.textContent = `${Math.trunc(breakTime / 60)}:${
-        breakTime % 60 < 10 ? `0${breakTime % 60}` : breakTime % 60
-      }`;
-    }
-  }, 1000);
+    timer = setInterval(() => {
+      if (pause === false && startTime > 0) {
+        startTime--;
+        displayTime(timeElt, startTime);
+      } else if (pause === false && breakTime === 0 && startTime === 0) {
+        startTime = initTime;
+        breakTime = initBreak;
+        roundsNbr++;
+        roundsElt.textContent = `Pomodoro ${"🍅".repeat(roundsNbr)}`;
+        displayTime(timeElt, startTime);
+        timeElt.classList.add("active");
+        breakElt.classList.remove("active");
+      } else if (pause === false && startTime === 0) {
+        timeElt.classList.remove("active");
+        breakElt.classList.add("active");
+        breakTime--;
+        displayTime(breakElt, breakTime);
+      }
+    }, 1000);
+  } else {
+    return;
+  }
+});
+
+btnPauseElt.addEventListener("click", () => {
+  pause = !pause;
 });
 
 window.onload = () => {

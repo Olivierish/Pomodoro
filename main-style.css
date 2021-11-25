@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap");
 *,
 ::before,
 ::after {
@@ -441,7 +442,7 @@ header #close .hamb2 {
   height: 300px;
 }
 
-.wrapper .pomodoro .pomoInfo {
+.wrapper .pomodoro .pomo-info {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -461,7 +462,7 @@ header #close .hamb2 {
   color: white;
 }
 
-.wrapper .pomodoro .pomoInfo .rounds {
+.wrapper .pomodoro .pomo-info .rounds {
   margin-top: 15px;
   padding: 10px;
   font-size: 1.2em;
@@ -469,14 +470,30 @@ header #close .hamb2 {
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-.wrapper .pomodoro .pomoInfo .time {
+.wrapper .pomodoro .pomo-info .time {
+  display: none;
+  font-family: "monospace";
+  padding: 10px;
+  font-size: 5em;
+  font-weight: 100;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.wrapper .pomodoro .pomo-info .break {
+  display: none;
+  font-family: "monospace";
+  color: burlywood;
   padding: 10px;
   font-size: 5em;
   font-weight: 200;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-.wrapper .pomodoro .pomoInfo .btns {
+.wrapper .pomodoro .pomo-info .active {
+  display: block;
+}
+
+.wrapper .pomodoro .pomo-info .btns {
   width: 350px;
   padding: 10px;
   display: -webkit-box;
@@ -491,12 +508,12 @@ header #close .hamb2 {
 }
 
 @media only screen and (max-width: 350px) {
-  .wrapper .pomodoro .pomoInfo .btns {
+  .wrapper .pomodoro .pomo-info .btns {
     width: 300px;
   }
 }
 
-.wrapper .pomodoro .pomoInfo .btns button {
+.wrapper .pomodoro .pomo-info .btns button {
   width: 150px;
   margin-left: 10px;
   margin-right: 10px;
@@ -514,12 +531,12 @@ header #close .hamb2 {
 }
 
 @media only screen and (max-width: 350px) {
-  .wrapper .pomodoro .pomoInfo .btns button {
+  .wrapper .pomodoro .pomo-info .btns button {
     width: 120px;
   }
 }
 
-.wrapper .pomodoro .pomoInfo .btns button:hover {
+.wrapper .pomodoro .pomo-info .btns button:hover {
   background-color: rgba(240, 255, 240, 0.25);
 }
 /*# sourceMappingURL=main-style.css.map */

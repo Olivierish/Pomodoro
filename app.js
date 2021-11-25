@@ -33,24 +33,64 @@ function toggleClassName() {
   .btn b3(txt:reset)
 }
 */
+const pomoContainerElt = document.querySelector(".pomo-info");
 const roundsElt = document.querySelector(".rounds");
 const timeElt = document.querySelector(".time");
+const breakElt = document.querySelector(".break");
 const btnStartElt = document.querySelector(".start");
 const btnPauseElt = document.createElement("button");
 btnPauseElt.setAttribute("class", "pause");
 btnPauseElt.textContent = "Pause";
 const btnResetElt = document.querySelector(".reset");
 
-console.log(roundsElt, timeElt, btnStartElt, btnResetElt, btnPauseElt);
-
-let startTime = 1800; //30min
-let breakTime = 300; //5min
+let startTime = 3; //30min
+let breakTime = 302; //5min
 let isBreak = false;
 let roundsNbr = 0;
 roundsElt.textContent = `Pomodoro ${roundsNbr}`;
+/*
+timeElt.textContent = `${Math.trunc(startTime / 60)}:${
+  startTime % 60 < 10 ? `0${startTime % 60}` : startTime % 60
+}`;*/
+displayTime(timeElt, startTime);
+/*
+breakElt.textContent = `${Math.trunc(breakTime / 60)}:${
+  breakTime % 60 < 10 ? `0${breakTime % 60}` : breakTime % 60
+}`;*/
+displayTime(breakElt, breakTime);
+btnStartElt.addEventListener("click", () => {
+  //I added this instruction here to avoid the dela of 1sec. after the click
+
+  startTime--;
+  timeElt.textContent = `${Math.trunc(startTime / 60)}:${
+    startTime % 60 < 10 ? `0${startTime % 60}` : startTime % 60
+  }`;
+
+  let timer = setInterval(() => {
+    if (startTime > 0) {
+      startTime--;
+      timeElt.textContent = `${Math.trunc(startTime / 60)}:${
+        startTime % 60 < 10 ? `0${startTime % 60}` : startTime % 60
+      }`;
+    } else if (startTime === 0) {
+      timeElt.classList.remove("active");
+      breakElt.classList.add("active");
+      breakTime--;
+      breakElt.textContent = `${Math.trunc(breakTime / 60)}:${
+        breakTime % 60 < 10 ? `0${breakTime % 60}` : breakTime % 60
+      }`;
+    }
+  }, 1000);
+});
 
 window.onload = () => {
   //window.scrollTo(0, document.body.scrollHeight);
   document.querySelector(".mask").scrollIntoView({ behavior: "smooth" });
   document.querySelector(".mask").scrollTop = document.scrollHeight + 0;
 };
+
+function displayTime(element, time) {
+  element.textContent = `${Math.trunc(time / 60)}:${
+    time % 60 < 10 ? `0${time % 60}` : time % 60
+  }`;
+}

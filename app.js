@@ -15,40 +15,25 @@ function toggleClassName() {
   }
 }
 
-//Pomodoro
-/*
-.affichage{
-  .bloc .travail{
-    p(txt: travail)
-    p.affichageT
-  }
-  .block .pause{
-    p(txt:repos)
-    p.affichageP
-  }
-}
-.container-btns{
-  .btn b1(txt:commencer)
-  .btn b2(txt:Pause)
-  .btn b3(txt:reset)
-}
-*/
 const pomoContainerElt = document.querySelector(".pomo-info");
 const roundsElt = document.querySelector(".rounds");
 const timeElt = document.querySelector(".time");
 const breakElt = document.querySelector(".break");
 const btnsElt = document.querySelector(".btns");
 const btnStartElt = document.querySelector(".start");
-const btnPauseElt = document.querySelector(".pause");
+//const btnPauseElt = document.querySelector(".pause");
+const btnPauseElt = document.createElement("button");
+btnPauseElt.setAttribute("class", "pause");
+btnPauseElt.textContent = "Pause";
 const btnResetElt = document.querySelector(".reset");
 
 let checkInterval = false; // To avoid the click spams
-const initTime = 10,
-  initBreak = 9; //30min //5min
+const initTime = 1,
+  initBreak = 301; //30min //5min
 let startTime = initTime;
 let breakTime = initBreak;
 let pause = false;
-let roundsNbr = 2;
+let roundsNbr = 1;
 
 let timer; //setInterval content
 
@@ -58,6 +43,7 @@ displayTime(timeElt, startTime);
 displayTime(breakElt, breakTime);
 
 btnStartElt.addEventListener("click", () => {
+  btnsElt.replaceChild(btnPauseElt, btnStartElt);
   if (checkInterval === false) {
     checkInterval = true;
     pause = false;
@@ -73,7 +59,13 @@ btnStartElt.addEventListener("click", () => {
       } else if (pause === false && breakTime === 0 && startTime === 0) {
         startTime = initTime;
         breakTime = initBreak;
-        roundsNbr++;
+        if (roundsNbr < 4) {
+          roundsNbr++;
+        } else {
+          reset();
+          return;
+        }
+
         roundsElt.textContent = `Pomodoro ${"🍅".repeat(roundsNbr)}`;
         displayTime(timeElt, startTime);
         timeElt.classList.add("active");
@@ -92,6 +84,15 @@ btnStartElt.addEventListener("click", () => {
 
 btnPauseElt.addEventListener("click", () => {
   pause = !pause;
+  if (pause) {
+    btnPauseElt.textContent = "Start";
+  } else {
+    btnPauseElt.textContent = "Pause";
+  }
+});
+
+btnResetElt.addEventListener("click", () => {
+  reset();
 });
 
 window.onload = () => {
@@ -104,4 +105,16 @@ function displayTime(element, time) {
   element.textContent = `${Math.trunc(time / 60)}:${
     time % 60 < 10 ? `0${time % 60}` : time % 60
   }`;
+}
+
+function reset() {
+  clearInterval(timer);
+  checkInterval = false;
+  startTime = initTime;
+  breakTime = initBreak;
+  displayTime(timeElt, startTime);
+  displayTime(breakElt, breakTime);
+  timeElt.classList.add("active");
+  breakElt.classList.remove("active");
+  btnsElt.replaceChild(btnStartElt, btnPauseElt);
 }

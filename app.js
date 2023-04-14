@@ -31,8 +31,8 @@ const ringtoneEndSessionElt = document.querySelector(".ringtone-end-session");
 const coffeeBreakElt = document.querySelector(".coffee-break");
 
 let checkInterval = false; // To avoid the click spams
-const initTime = 60 * 1,
-  initBreak = 15; 
+const initTime = 60 * 30,
+  initBreak = 60 * 5; 
 let startTime = initTime;
 let breakTime = initBreak;
 let pause = false;
